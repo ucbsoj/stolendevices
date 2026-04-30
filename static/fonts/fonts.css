@@ -1,3 +1,11 @@
+@font-face {
+  font-display: swap;
+  font-family: 'bc-barell';
+  font-weight: 400;
+  font-style: normal;
+  src: url('/fonts/bc-barell-font-family/BCBarellTEST-Regular.otf') format('opentype');
+}
+
 /* lato-regular - latin */
 @font-face {
   font-display: swap;

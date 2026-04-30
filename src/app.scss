@@ -12,18 +12,21 @@ $font-size-base: 1.1rem;
 $font-weight-base: 400;
 $line-height-base: 1.6;
 
-$headings-font-family: 'Roboto Slab', 'Lato', serif;
+$headings-font-family: 'bc-barell', 'Roboto Slab', 'Lato', serif;
 $headings-font-style: null;
-$headings-font-weight: 500;
+$headings-font-weight: 400;
 $headings-line-height: 1.2;
 $headings-color: #404040;
 
-$display-font-family: 'Crimson Text', 'Roboto Slab', Garamond, 'Times New Roman', serif;
+$display-font-family: 'bc-barell','Crimson Text', 'Roboto Slab', Garamond, 'Times New Roman', serif;
 $display-font-style:  null;
 $display-font-weight: 300;
 $display-line-height: $headings-line-height;
 
 $small-font-size: .875em;
+
+$table-cell-vertical-align: middle;
+$table-bg:  transparent;
 
 @import "bootstrap/scss/bootstrap"; /* Import all of Bootstrap’s Sass */
 
@@ -40,6 +43,8 @@ html, body {
   height: 100%;
   -webkit-font-smoothing: auto;
   -moz-osx-font-smoothing: auto;
+  background-color: #5A5A5A;
+  overflow-x: hidden;
 }
 
 
@@ -51,4 +56,38 @@ html, body {
   right: 50%;
   margin-left: -50vw;
   margin-right: -50vw;
+}
+
+.crimson{
+  font-family: 'Crimson Text', serif;
+}
+
+
+.hero {
+
+  background-color: #000000;
+
+  h1,p {
+    position: relative;
+    z-index: 2;
+  }
+
+  p{
+    font-size: 1.2rem;
+  }
+
+  video{
+    position:absolute;
+    opacity: 0.5;
+    z-index: 1;
+    top:50%;
+    left:50%;
+    width:auto;
+    height:100vh;
+    transform: translate(-50%, -50%);
+    @media (min-aspect-ratio:16/9){
+      width: 100vw;
+      height: auto;
+    }
+  }
 }

@@ -8,6 +8,7 @@
 		"dev": "vite dev",
 		"dev:open": "vite dev --open",
 		"build:extract-google-doc": "node --env-file=.env scripts/build-from-google-doc.js",
+		"gdoc":"npm run build:extract-google-doc",
 		"build": "vite build",
 		"preview": "vite preview",
 		"prepare": "svelte-kit sync || echo ''",
