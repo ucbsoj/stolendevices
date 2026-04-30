@@ -485,6 +485,11 @@ function cleanAndFilterHtml(html) {
 			const rawHref = node.getAttribute('href') || '#';
 			const cleanHref = unwrapGoogleUrl(rawHref);
 
+			// Strip Google Docs comment anchors like #cmnt1
+			if (/^#cmnt.*$/i.test(cleanHref)) {
+				return ''; // keep text, remove the link entirely
+			}
+
 			if (!isMeaningful(inner)) return '';
 
 			if (isExternalLink(cleanHref)) {
