@@ -503,18 +503,33 @@ function cleanAndFilterHtml(html) {
 			const headerRow = rows[0];
 			const bodyRows = rows.slice(1);
 
-			const thead = headerRow ? `<thead>${toCleanNode(headerRow)}</thead>` : '';
+			const thead = headerRow ? `<thead class="align-middle">${toCleanNode(headerRow)}</thead>` : '';
 
 			const tbody = bodyRows.length ? `<tbody>${bodyRows.map(toCleanNode).join('')}</tbody>` : '';
 
 			return `
         <div class="table-responsive">
-          <table class="table table-striped">
-            ${thead}
-            ${tbody}
-          </table>
+					<table class="table">
+						${thead}
+						${tbody}
+					</table>
         </div>
       `;
+			
+			// return `
+      //   <div class="table-responsive full-bleed">
+			// 		  <div class="container-fluid">
+      //   			<div class="row justify-content-center">
+      //     			<div class="col-12 col-lg-10 col-xxl-8">
+			// 						<table class="table">
+			// 							${thead}
+			// 							${tbody}
+			// 						</table>
+			// 				  </div>
+			// 				</div>
+			// 			</div>
+      //   </div>
+      // `;
 		}
 
 		if (tag === 'TR') {
@@ -610,7 +625,7 @@ async function main() {
 	const html = await res.text();
 	console.log('\nIMGs found in Google Doc:', (html.match(/<img\b/gi) || []).length);
 
-	const cleanedHtml = cleanAndFilterHtml(html);
+	const cleanedHtml = cleanAndFilterHtml(html).replace(/^\s*<p\b[^>]*>[\s\S]*?<\/p>/i, '');
 
 	// 1) tokenize (paired + self)
 	const tokenized = splitHtmlIntoBlocksWithPairedShortcodes(cleanedHtml);
@@ -620,6 +635,7 @@ async function main() {
 
 	// 3) fix trailing </p> issues to prevent SSR hydration mismatches
 	const fixed = fixDanglingParagraphsAcrossBlocks(compiled);
+
 
 
 	// Debug: show shortcode blocks
