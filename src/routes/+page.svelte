@@ -16,7 +16,7 @@ This code is in +page.svelte and can be manually coded using HTML or Svelte tags
   <h1 class="text-white text-center display-1">Across The Ocean</h1>
   <p class="text-white fw-light text-center">From the Bay Area to Vietnam: Follow the journey of stolen mobile devices</p>
   <video width="100%" height="100%" muted autoplay playsinline loop>
-    <source src="/hero-video.mp4" type="video/mp4">
+    <source src={asset('/hero-video.mp4')} type="video/mp4">
   </video>
 </header>
 
