@@ -9,25 +9,27 @@
 </script>
 
 <script lang="ts">
+	import { browser } from '$app/environment';
+
 	export let blocks: Block[] = [];
 
-	// Import all components under $lib/components
 	const modules = import.meta.glob('$lib/components/**/*.svelte', { eager: true });
-
 	const registry: Record<string, any> = {};
 
 	for (const [path, mod] of Object.entries(modules)) {
 		const file = path.split('/').pop() ?? '';
-
-		// EXCLUDE this renderer itself
 		if (file === 'DocRenderer.svelte') continue;
-
 		const base = file.replace(/\.svelte$/, '');
 		// @ts-expect-error — Svelte component default export
 		registry[base] = mod.default;
 	}
 
+	// TEMPORARY DEBUG — paste console output here
+	console.log('registry keys:', Object.keys(registry));
+	console.log('looking for VideoPop:', registry['VideoPop']);
+
 	function getComponent(name: string) {
+		console.log('looking up:', name, '→', registry[name]);
 		return registry[name];
 	}
 
@@ -37,51 +39,32 @@
 
 	function normalizeAttrs(attrs: Record<string, any>) {
 		const out: Record<string, any> = {};
-
 		for (const [k, v] of Object.entries(attrs ?? {})) {
 			const key = toCamel(k);
-
-			// Preserve arrays and objects exactly (e.g. Scrolly.steps)
-			if (v !== null && typeof v === 'object') {
-				out[key] = v;
-				continue;
-			}
-
-			// Normalize booleans that may arrive as strings
-			if (v === 'true') {
-				out[key] = true;
-				continue;
-			}
-			if (v === 'false') {
-				out[key] = false;
-				continue;
-			}
-
-			// Normalize numeric strings when safe
-			if (typeof v === 'string' && v.trim() !== '' && !isNaN(Number(v))) {
-				out[key] = Number(v);
-				continue;
-			}
-
+			if (v !== null && typeof v === 'object') { out[key] = v; continue; }
+			if (v === 'true') { out[key] = true; continue; }
+			if (v === 'false') { out[key] = false; continue; }
+			if (typeof v === 'string' && v.trim() !== '' && !isNaN(Number(v))) { out[key] = Number(v); continue; }
 			out[key] = v;
 		}
-
 		return out;
 	}
-
 </script>
 
-{#each blocks as block, i (i)} 
-		{#if block.type === 'html'} 
-			{@html block.html}
-		{:else if block.type === 'shortcode'} 
-				{#if getComponent(block.name)} 
-					<svelte:component 
-						this={getComponent(block.name)} 
-						{...normalizeAttrs(block.attrs)} 
-					/> 
-				{:else} 
-						<!-- no matching component: silently skip --> 
-				{/if} 
-		{/if} 
+{#each blocks as block, i (i)}
+	{#if block.type === 'html'}
+		{@html block.html}
+	{:else if block.type === 'shortcode'}
+		{#if getComponent(block.name)}
+			<svelte:component
+				this={getComponent(block.name)}
+				{...normalizeAttrs(block.attrs)}
+			/>
+		{:else}
+			<!-- DEBUG: show unmatched shortcodes -->
+			<p style="color:red; border:1px solid red; padding:8px;">
+				⚠️ No component found for: <strong>{block.name}</strong>
+			</p>
+		{/if}
+	{/if}
 {/each}

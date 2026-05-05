@@ -269,20 +269,24 @@
     <figure class="my-3 video">
         {#if resolved.kind === 'file'}
           <!-- svelte-ignore a11y_media_has_caption -->
-          <video
-            src={videoSrc}
-            title={title}
-            class="w-100 h-100"
-            autoplay={autoplayBool}
-            controls={controlsBool}
-            muted={muteBool}
-            playsinline={playsinlineBool}
-            loop={loop}
-          >
-            {#if captionsSrc}
-              <track kind="captions" src={captionsSrc} srclang={srclang} label={label} default />
-            {/if}
-          </video>
+          <div class="row justify-content-center">
+            <div class="col-10 col-sm-6">
+              <video
+                src={videoSrc}
+                title={title}
+                class="w-100 h-100"
+                autoplay={autoplayBool}
+                controls={controlsBool}
+                muted={muteBool}
+                playsinline={playsinlineBool}
+                loop={loop}
+              >
+              {#if captionsSrc}
+                <track kind="captions" src={captionsSrc} srclang={srclang} label={label} default />
+              {/if}
+            </video>
+            </div>
+          </div>
         {:else}
           <div class="ratio ratio-16x9">
             <iframe
