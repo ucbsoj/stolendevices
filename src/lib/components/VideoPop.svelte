@@ -49,7 +49,7 @@
 </div>
 
 {#if expanded}
-  <div class="backdrop" on:click={close}></div>
+  <button type="button" aria-label="Close" class="backdrop" on:click={close}></button>
 {/if}
 
 <div

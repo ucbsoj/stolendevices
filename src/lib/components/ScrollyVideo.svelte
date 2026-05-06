@@ -48,8 +48,7 @@
           muted
           loop
           playsinline
-          class="media-fit"
-        />
+          class="media-fit"></video>
       {:else}
         <img src={imgSrc} alt="Step 2" class="media-fit" />
       {/if}

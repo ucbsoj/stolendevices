@@ -47,7 +47,7 @@
       playsinline
       loop
       style="position:absolute; top:0; left:0; width:100%; height:100%; object-fit:cover; pointer-events:none;"
-    />
+    ></video>
     <div class="inline-overlay">
       <div class="scroll-hint">▶ Scroll to expand</div>
     </div>
@@ -56,7 +56,7 @@
 
 <!-- Blurred backdrop -->
 {#if expanded}
-  <div class="backdrop" on:click={close} />
+  <button type="button" aria-label="Close" class="backdrop" on:click={close}></button> 
 {/if}
 
 <!-- Expanding video box -->
@@ -71,6 +71,7 @@
   "
 >
   <button class="close-btn" on:click={close}>✕</button>
+  <!-- svelte-ignore a11y_media_has_caption -->
   <video
     src={videoSrc}
     controls={controls}
@@ -78,7 +79,7 @@
     playsinline={playsinline}
     loop={loop}
     style="width:100%; height:100%; object-fit:contain; display:block; background:#000;"
-  />
+ ></video>
 </div>
 
 <style>
