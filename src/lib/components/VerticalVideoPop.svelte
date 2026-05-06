@@ -1,6 +1,6 @@
 <script lang="ts">
   import { onMount } from 'svelte';
-
+  import { asset } from '$app/paths';
   export let src: string = '';
   export let size: string = 'fit';
   export let controls: boolean = true;
@@ -41,7 +41,7 @@
 <div bind:this={anchor} class="embed-anchor" class:fit={size === 'fit'} class:large={size === 'large'}>
   <div class="embed-inline">
     <video
-      src={videoSrc}
+      src={asset(videoSrc)}
       muted
       autoplay
       playsinline
@@ -73,7 +73,7 @@
   <button class="close-btn" on:click={close}>✕</button>
   <!-- svelte-ignore a11y_media_has_caption -->
   <video
-    src={videoSrc}
+    src={asset(videoSrc)}
     controls={controls}
     autoplay={autoplay}
     playsinline={playsinline}
